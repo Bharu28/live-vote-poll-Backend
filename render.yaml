@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: live-vote-poll-backend
+    runtime: go
+    buildCommand: go build -o app .
+    startCommand: ./app
+    envVars:
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: MONGODB_DATABASE
+        value: pulsepoll
+      - key: FRONTEND_ORIGIN
+        sync: false
