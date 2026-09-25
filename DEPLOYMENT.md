@@ -20,3 +20,23 @@ The Render service should use:
 
 After saving the variables, trigger a new deploy. A successful startup includes
 `MongoDB connected successfully!` in the deploy logs.
+
+## Authentication failures
+
+If the log contains `bad auth` or `authentication failed`, the Render
+`MONGODB_URI` has invalid MongoDB Atlas credentials. This is not caused by the
+Go application:
+
+1. In MongoDB Atlas, open **Database Access** and reset the password for the
+   database user used by this service.
+2. In Atlas, choose **Connect → Drivers**, select Go, and copy a new connection
+   string. Replace the placeholders with that database user's credentials.
+3. URL-encode reserved characters in the username or password. For example,
+   `@` becomes `%40`, `:` becomes `%3A`, and `/` becomes `%2F`.
+4. Replace the Render `MONGODB_URI` value with the new string and save it.
+5. Confirm the Atlas Network Access list allows Render to connect, then deploy
+   again.
+
+Do not commit the connection string or paste it into source code. If the URI
+contains `&`, keep it as one Render environment-variable value; do not add
+shell quotes around it.
